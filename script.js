@@ -2,6 +2,7 @@ const stage = document.querySelector("#stage");
 const displayText = document.querySelector("#displayText");
 const textInput = document.querySelector("#textInput");
 const fullscreenBtn = document.querySelector("#fullscreenBtn");
+const presetStyle = document.querySelector("#presetStyle");
 const fontFamily = document.querySelector("#fontFamily");
 const fontWeight = document.querySelector("#fontWeight");
 const textStyle = document.querySelector("#textStyle");
@@ -36,6 +37,115 @@ const validTextStyles = new Set([
   "glass",
 ]);
 
+const presets = {
+  minimal: {
+    fontFamily: "Inter, Arial, sans-serif",
+    fontWeight: "700",
+    textStyle: "clean",
+    animationStyle: "none",
+    animationSpeed: "slow",
+    fontSize: "96",
+    textColor: "#ffffff",
+    backgroundColor: "#050505",
+    position: "center",
+    autoFit: true,
+    uppercase: false,
+  },
+  quote: {
+    fontFamily: "Georgia, 'Times New Roman', serif",
+    fontWeight: "700",
+    textStyle: "soft-glow",
+    animationStyle: "cinematic",
+    animationSpeed: "slow",
+    fontSize: "82",
+    textColor: "#f8fafc",
+    backgroundColor: "#111827",
+    position: "center",
+    autoFit: true,
+    uppercase: false,
+  },
+  news: {
+    fontFamily: "'Arial Black', Gadget, sans-serif",
+    fontWeight: "900",
+    textStyle: "caption-box",
+    animationStyle: "ticker",
+    animationSpeed: "normal",
+    fontSize: "76",
+    textColor: "#ffffff",
+    backgroundColor: "#7f1d1d",
+    position: "bottom",
+    autoFit: false,
+    uppercase: true,
+  },
+  neonIntro: {
+    fontFamily: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+    fontWeight: "900",
+    textStyle: "neon-outline",
+    animationStyle: "neon",
+    animationSpeed: "normal",
+    fontSize: "112",
+    textColor: "#67e8f9",
+    backgroundColor: "#080313",
+    position: "center",
+    autoFit: true,
+    uppercase: true,
+  },
+  podcast: {
+    fontFamily: "'Trebuchet MS', Arial, sans-serif",
+    fontWeight: "900",
+    textStyle: "glass",
+    animationStyle: "lower-third",
+    animationSpeed: "normal",
+    fontSize: "74",
+    textColor: "#fde68a",
+    backgroundColor: "#1f2937",
+    position: "bottom",
+    autoFit: true,
+    uppercase: false,
+  },
+  alert: {
+    fontFamily: "'Arial Black', Gadget, sans-serif",
+    fontWeight: "900",
+    textStyle: "outline",
+    animationStyle: "beat",
+    animationSpeed: "fast",
+    fontSize: "102",
+    textColor: "#facc15",
+    backgroundColor: "#1c1917",
+    position: "center",
+    autoFit: true,
+    uppercase: true,
+  },
+  caption: {
+    fontFamily: "Arial, Helvetica, sans-serif",
+    fontWeight: "700",
+    textStyle: "caption-box",
+    animationStyle: "none",
+    animationSpeed: "slow",
+    fontSize: "58",
+    textColor: "#ffffff",
+    backgroundColor: "#111111",
+    position: "bottom",
+    autoFit: true,
+    uppercase: false,
+  },
+  story: {
+    fontFamily: "'Didot', 'Bodoni 72', Georgia, serif",
+    fontWeight: "700",
+    textStyle: "gradient",
+    animationStyle: "drift",
+    animationSpeed: "slow",
+    fontSize: "88",
+    textColor: "#fef3c7",
+    backgroundColor: "#172554",
+    position: "center",
+    autoFit: true,
+    uppercase: false,
+  },
+};
+
+const validPresets = new Set(["custom", ...Object.keys(presets)]);
+
 const saved = JSON.parse(localStorage.getItem("fullScreenTextSettings") || "{}");
 const animationAliases = {
   fade: "cinematic",
@@ -51,6 +161,7 @@ if (saved.animationStyle) {
 
 const settings = {
   text: "Your text goes here",
+  preset: "custom",
   fontFamily: "Inter, Arial, sans-serif",
   fontWeight: "700",
   textStyle: "clean",
@@ -100,6 +211,10 @@ function applySettings() {
   displayText.style.setProperty("--animation-duration", getAnimationDuration());
   stage.style.backgroundColor = settings.backgroundColor;
 
+  if (!validPresets.has(settings.preset)) {
+    settings.preset = "custom";
+  }
+
   if (!validAnimations.has(settings.animationStyle)) {
     settings.animationStyle = "none";
   }
@@ -121,6 +236,7 @@ function applySettings() {
   stage.classList.toggle("position-bottom", settings.position === "bottom");
 
   textInput.value = settings.text;
+  presetStyle.value = settings.preset;
   fontFamily.value = settings.fontFamily;
   fontWeight.value = settings.fontWeight;
   textStyle.value = settings.textStyle;
@@ -140,8 +256,26 @@ function applySettings() {
   saveSettings();
 }
 
-function updateSetting(key, value) {
+function updateSetting(key, value, markCustom = true) {
   settings[key] = value;
+
+  if (markCustom) {
+    settings.preset = "custom";
+  }
+
+  applySettings();
+}
+
+function applyPreset(presetName) {
+  settings.preset = presetName;
+
+  if (presetName !== "custom" && presets[presetName]) {
+    Object.assign(settings, presets[presetName], {
+      text: settings.text,
+      preset: presetName,
+    });
+  }
+
   applySettings();
 }
 
@@ -160,7 +294,8 @@ function getAnimationDuration() {
   return durations[settings.animationStyle]?.[settings.animationSpeed] || "4s";
 }
 
-textInput.addEventListener("input", (event) => updateSetting("text", event.target.value));
+textInput.addEventListener("input", (event) => updateSetting("text", event.target.value, false));
+presetStyle.addEventListener("change", (event) => applyPreset(event.target.value));
 fontFamily.addEventListener("change", (event) => updateSetting("fontFamily", event.target.value));
 fontWeight.addEventListener("change", (event) => updateSetting("fontWeight", event.target.value));
 textStyle.addEventListener("change", (event) => updateSetting("textStyle", event.target.value));
