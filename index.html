@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Screen Text</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="stage" id="stage" aria-label="Full screen text preview">
+        <div class="display-text" id="displayText">Your text goes here</div>
+      </section>
+
+      <aside class="controls" aria-label="Text controls">
+        <div class="brand-row">
+          <div>
+            <p class="eyebrow">YouTube Background</p>
+            <h1>Full Screen Text</h1>
+          </div>
+          <button class="fullscreen-button" id="fullscreenBtn" type="button" title="Enter full screen">
+            <span>Full Screen</span>
+          </button>
+        </div>
+
+        <label class="field">
+          <span>Text</span>
+          <textarea id="textInput" rows="5" placeholder="Type your video background text...">Your text goes here</textarea>
+        </label>
+
+        <div class="control-grid">
+          <label class="field">
+            <span>Font</span>
+            <select id="fontFamily">
+              <option value="Inter, Arial, sans-serif">Clean Sans</option>
+              <option value="Arial, Helvetica, sans-serif">Classic Sans</option>
+              <option value="'Trebuchet MS', Arial, sans-serif">Friendly Sans</option>
+              <option value="'Arial Black', Gadget, sans-serif">Bold Block</option>
+              <option value="Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Poster</option>
+              <option value="'Avenir Next Condensed', 'Arial Narrow', Arial, sans-serif">Condensed</option>
+              <option value="Georgia, 'Times New Roman', serif">Editorial Serif</option>
+              <option value="'Didot', 'Bodoni 72', Georgia, serif">Elegant Serif</option>
+              <option value="'Courier New', Courier, monospace">Typewriter Mono</option>
+              <option value="'SF Mono', Menlo, Monaco, Consolas, monospace">Modern Mono</option>
+              <option value="'Marker Felt', 'Comic Sans MS', cursive">Handwritten</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Weight</span>
+            <select id="fontWeight">
+              <option value="700">Bold</option>
+              <option value="400">Regular</option>
+              <option value="900">Heavy</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Text style</span>
+          <select id="textStyle">
+            <option value="clean">Clean</option>
+            <option value="shadow">Drop shadow</option>
+            <option value="outline">Bold outline</option>
+            <option value="soft-glow">Soft glow</option>
+            <option value="neon-outline">Neon outline</option>
+            <option value="gradient">Gradient text</option>
+            <option value="caption-box">Caption box</option>
+            <option value="highlight">Highlight bar</option>
+            <option value="glass">Glass box</option>
+          </select>
+        </label>
+
+        <div class="control-grid">
+          <label class="field">
+            <span>Animation</span>
+            <select id="animationStyle">
+              <option value="none">None</option>
+              <option value="cinematic">Cinematic reveal</option>
+              <option value="lower-third">Lower-third pop</option>
+              <option value="typewriter">Typewriter</option>
+              <option value="ticker">News ticker</option>
+              <option value="neon">Neon glow</option>
+              <option value="spotlight">Spotlight</option>
+              <option value="drift">Soft drift</option>
+              <option value="beat">Beat pulse</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Speed</span>
+            <select id="animationSpeed">
+              <option value="slow">Slow</option>
+              <option value="normal">Normal</option>
+              <option value="fast">Fast</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Text size</span>
+          <input id="fontSize" type="range" min="28" max="180" value="92" />
+        </label>
+
+        <div class="control-grid">
+          <label class="field">
+            <span>Text color</span>
+            <input id="textColor" type="color" value="#ffffff" />
+          </label>
+
+          <label class="field">
+            <span>Background</span>
+            <input id="backgroundColor" type="color" value="#050505" />
+          </label>
+        </div>
+
+        <div class="segmented" role="group" aria-label="Text position">
+          <button class="segment active" type="button" data-position="center">Center</button>
+          <button class="segment" type="button" data-position="top">Top</button>
+          <button class="segment" type="button" data-position="bottom">Bottom</button>
+        </div>
+
+        <div class="toggle-row">
+          <label>
+            <input id="autoFit" type="checkbox" checked />
+            Auto fit text
+          </label>
+          <label>
+            <input id="uppercase" type="checkbox" />
+            Uppercase
+          </label>
+        </div>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
