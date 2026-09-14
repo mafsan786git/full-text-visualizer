@@ -11,6 +11,7 @@ Your settings are saved in the browser, so the next time you open the page it ke
 ## Features
 
 - Live full-screen text preview
+- One-click presets for common YouTube text backgrounds
 - Text, background, font, size, weight, and style controls
 - Practical animation presets with speed controls
 - Top, center, and bottom positioning
